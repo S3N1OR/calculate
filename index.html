@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+	<div class="container">
+		<!-- <div class="btns">
+			<button class="btn room-add" id="room-add" onclick="roomAdd()">+</button>
+			<button class="btn room-remove" id="room-remove" onclick="roomRemove()">-</button>
+		</div> -->
+		<div class="rooms" id="rooms">
+			<div class="room room777">
+				<div class="room-top">
+					<h1 class="room-title">Комната 777</h1>
+					<button class="apply" id="apply" onclick="inputOnChange()">ПРИМЕНИТЬ</button>
+				</div>
+				
+				<div class="room-col">
+					<!-- <input type="checkbox" name="room-input-height" id="" class="room-input-height-checkbox"> -->
+
+					<div class="room-inputs">
+						<div class="room-input-box">
+							<div class="room-input-top">
+								<h2 class="room-input-title">Длина</h2>
+							</div>
+							<input class="input" type="number" id="room-input-long" value="9">
+							<span>m</span>
+						</div>
+	
+						<div class="room-input-box">
+							<div class="room-input-top">
+								<h2 class="room-input-title">Ширина</h2>
+							</div>
+							<input class="input" type="number" id="room-input-width" value="4.8">
+							<span>m</span>
+						</div>
+	
+						<!-- <div class="room-input-box">
+							<div class="room-input-top">
+								<h2 class="room-input-title">Высота</h2>
+							</div>
+							<input disabled type="number" id="room-input-height" value="0">
+							<span>m</span>
+						</div> -->
+	
+					</div>
+
+					<div class="room-inputs">
+						<div class="room-input-box">
+							<div class="room-input-top">
+								<h2 class="room-input-title">Каркас</h2>
+							</div>
+							<input class="input" type="number" id="room-input-karkas" value="40">
+							<span>cm</span>
+						</div>
+	
+						<div class="room-input-box">
+							<div class="room-input-top">
+								<h2 class="room-input-title">Кол-во балок</h2>
+							</div>
+							<input class="input" type="number" id="room-input-balka" value="10">
+							<span>шт</span>
+						</div>
+	
+					</div>
+					
+
+				</div>
+
+				<div class="room-bottom">
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<script src="./js/main.js"></script>
+</body>
+
+</html>
