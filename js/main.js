@@ -66,7 +66,7 @@ function inputOnChange (){
 
   krab = MyRound10(long * width);
 
-  soed = Math.ceil((width / k -1) * (long / 3 - 1));
+  soed = Math.ceil((width / k - 1) * (Math.ceil(long / 3 - 1)));
 
   shurup_mass = 1.2
   shurup_pcs = list * 75;
