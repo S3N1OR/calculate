@@ -1,38 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 body{
-  background-color: #cccccc;
+  font-family: 'Nunito', sans-serif;
 }
 
-input{
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #b8b8b8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.btns {
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  column-gap: 20px;
+}
+
+button {
+  font-size: 14px;
+  padding: 2px 10px;
+  width: 100%;
+  min-height: 35px;
+  border-radius: 5px;
+  color: #000000;
+  font-weight: 600;
+  background-color: #1ca4a2d4;
   border: 1px solid #000;
-  padding: 2px;
+  transition: all 0.2s ease;
 }
 
-.room-input-box{
-  margin-top: 10px;
+button:hover {
+  background-color: #ffffff;
+  border: 1px solid #000;
 }
 
-.room-input-box:last-child{
+.result {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.result h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.result-col {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3b3b3b;
+  font-weight: 500;
+}
+
+.rooms {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+.room {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.room h1, h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #3b3b3b;
+  font-weight: 500;
+}
+
+.room .cols {
+  display: flex;
+}
+
+.room .col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.room .col:last-child {
+  margin-right: 0;
+}
+
+.room .inputs {
+  margin-bottom: 20px;
+}
+
+.room .inputs div {
   margin-bottom: 10px;
 }
 
-button{
-  border: 1px solid #000;
-  font-weight: 700;
-  font-size: 24px;
-  padding: 5px 10px;
+.room .inputs h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
-.container{
-  padding: 20px;
-}
-
-.room-bottom-block + .room-bottom-block{
-  margin-top: 10px;
+.room .inputs input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
 }
 
-.room-bottom div{
-  background-color: #00000020;
-  border: 1px solid #000;
-  padding: 5px;
+.room .response {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.room .response div {
+  margin-bottom: 5px;
+}
+
+.room .response div:first-child {
+  margin-top: 5px;
+}
+
+.room .response div:last-child {
+  margin-bottom: 0;
+}
+
+.response div{
+  border-bottom: 1px solid #00000050;
+}
+
+.response div div{
+  border-bottom: none;
 }
