@@ -1,129 +1,305 @@
-const rooms = document.getElementById('rooms');
-const roomCountInput = document.getElementById('room-count-input');
+// Функции для округления чисел
+function roundUpToNearestTen(num) {
+  return Math.ceil(num / 10) * 10;
+}
 
-const roomInputLong = document.getElementById('room-input-long');
-const roomInputWidth = document.getElementById('room-input-width');
-// const roomInputHeight = document.getElementById('room-input-height');
-const roomInputKarkas = document.getElementById('room-input-karkas');
-const roomInputBalka = document.getElementById('room-input-balka');
+function roundUpToNearestThousand(num) {
+  return Math.ceil(num / 10) * 10;
+}
 
-const roomInputHeightCheckbox = document.querySelector('.room-input-height-checkbox');
+function roundToNearestTen(num) {
+  return Math.round(num / 10) * 10;
+}
 
-const inputs = document.querySelectorAll('input[type="number"]');
+window.onload = function() {
+    loadSavedRoomCount();
+    loadSavedRooms();
+    const rooms = document.querySelectorAll('.room');
+    rooms.forEach(room => {
+        const roomClass = room.classList[1];
+        const inputs = room.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                updateResponses(roomClass);
+            });
+        });А
+    });
+};
 
-inputs.forEach(input => {
-  input.addEventListener('input', function() {
-    if (this.value.length > 5) {
-      this.value = this.value.slice(0, 5);
+function updateResponses(roomClass) {
+  const room = document.querySelector('.' + roomClass);
+  const inputs = room.querySelectorAll('input[type="number"]');
+  const response = room.querySelector('.response');
+
+  const long = parseFloat(inputs[0].value);
+  const width = parseFloat(inputs[1].value);
+  const height = parseFloat(inputs[2].value);
+  const karkas = parseFloat(inputs[3].value);
+  const balka = parseFloat(inputs[4].value);
+
+  const P = ((long + width) * 2).toFixed(1);
+  const S = (long * width).toFixed(1);
+  const M3 = (long * width * height).toFixed(1);
+  const k = karkas / 100;
+  const listLong = long / 2.5;
+  const listWidth = width / 1.2;
+  const list = Math.ceil(listLong * listWidth);
+  const NP = Math.ceil(P / 3);
+  const PP = Math.ceil((((width / k) - 1) * (long / 3)) + (S / 9));
+  const podves = Math.ceil(((width / k) - 1) * balka);
+  const krab = roundUpToNearestThousand(long * width);
+  const soed = Math.ceil((width / k - 1) * (Math.ceil(long / 3 - 1)));
+  const shurup_pcs = list * 75;
+  const shurup_kg = (shurup_pcs * 1.2 / 1000).toFixed(1);
+  const shurup_pack = Math.ceil(shurup_pcs / 1000);
+  const emem_pcs = podves * 4;
+  const emem_kg = (emem_pcs * 0.001).toFixed(1);
+  const emem_pack = Math.ceil(emem_pcs / 1000);
+  const mungo = NP * 7;
+
+  response.innerHTML = `
+      <div>Периметр: ${P} m</div>
+      <div>Площадь: ${S} кв</div>
+      <div>M3: ${M3} кв</div>
+      <div>ГКЛ: ${list} шт</div>
+      <div>НП: ${NP} шт</div>
+      <div>ПП: ${PP} шт</div>
+      <div>Подвес: ${podves} шт</div>
+      <div>Краб: ${krab} шт</div>
+      <div>Соединитель: ${soed} шт</div>
+      <div>Мунго: ${mungo} шт</div>
+      <div>
+        Шуруп 25мм:
+        <div>${shurup_pcs} шт</div>
+        <div>${shurup_kg} кг</div>
+        <div>${shurup_pack} пач.</div>
+      </div>
+      <div>
+        Эмэм:
+        <div>${emem_pcs} шт</div>
+        <div>${emem_kg} кг</div>
+        <div>${emem_pack} пач.</div>
+      </div>
+  `;
+
+  const resultCol = document.querySelector('.result-col');
+  let totalSum = list;
+
+  resultCol.textContent = 'Сумма всех материалов: ' + totalSum;
+}
+
+function totalResult(){
+    console.clear();
+    const roomsContainer = document.querySelector('.rooms');
+    const roomCount = roomsContainer.querySelectorAll('.room').length;
+
+    let allListCount = 0;
+    let allNPCount = 0;
+    let allPPCount = 0;
+    let allPodvesCount = 0;
+    let allKrabCount = 0;
+    let allSoedCount = 0;
+    let allmungoCount = 0;
+
+    let allShurup_pcsCount = 0;
+    let allShurup_kgCount = 0;
+    let allShurup_packCount = 0;
+
+    let allEmem_pcsCount = 0;
+    let allEmem_kgCount = 0;
+    let allEmem_packCount = 0;
+
+
+    for (let i = 0; i < roomCount; i++) {
+        const response = document.querySelectorAll('.response')[i];
+
+        const responseList = response.children[3];
+        const responseNP = response.children[4];
+        const responsePP = response.children[5];
+        const responsePodves = response.children[6];
+        const responseKrab = response.children[7];
+        const responseSoed = response.children[8];
+        const responsemungo = response.children[9];
+        
+        const responseShurup_pcs = response.children[10];
+        const responseShurup_kg = response.children[10];
+        const responseShurup_pack = response.children[10];
+
+        const responseEmem_pcs = response.children[11];
+        const responseEmem_kg = response.children[11];
+        const responseEmem_pack = response.children[11];
+
+        if (responseList){
+            const allList = parseInt(responseList.textContent.slice(0, -3).substr(4));
+            allListCount += allList;
+        }
+
+        if (responseNP){
+            const allNP = parseInt(responseNP.textContent.slice(0, -3).substr(4));
+            allNPCount += allNP;
+        }
+
+        if (responsePP){
+            const allPP = parseInt(responsePP.textContent.slice(0, -3).substr(4));
+            allPPCount += allPP;
+        }
+
+        if (responsePodves){
+            const allPodves = parseInt(responsePodves.textContent.slice(0, -3).substr(8));
+            allPodvesCount += allPodves;
+        }
+
+        if (responseKrab){
+            const allKrab = parseInt(responseKrab.textContent.slice(0, -3).substr(6));
+            allKrabCount += allKrab;
+        }
+
+        if (responseSoed){
+            const allSoed = parseInt(responseSoed.textContent.slice(0, -3).substr(13));
+            allSoedCount += allSoed;
+        }
+
+        if (responsemungo){
+            const allmungo = parseInt(responsemungo.textContent.slice(0, -3).substr(7));
+            allmungoCount += allmungo;
+        }
+
+        if (responseShurup_pcs){
+            const allShurup_pcs = parseInt(responseShurup_pcs.children[0].textContent);
+            allShurup_pcsCount += allShurup_pcs;
+        }
+
+        if (responseShurup_kg){
+            const allShurup_kg = parseFloat(responseShurup_kg.children[1].textContent);
+            allShurup_kgCount += allShurup_kg;
+        }
+
+        if (responseShurup_pack){
+            const allShurup_pack = parseInt(responseShurup_pcs.children[2].textContent);
+        }
+
+        if (responseEmem_pcs){
+            const allEmem_pcs = parseInt(responseEmem_pcs.children[0].textContent);
+            allEmem_pcsCount += allEmem_pcs;
+        }
+
+        if (responseEmem_kg){
+            const allEmem_kg = parseFloat(responseEmem_kg.children[1].textContent);
+            allEmem_kgCount += allEmem_kg;
+        }
+
+        if (responseEmem_pack){
+            const allEmem_pack = parseInt(responseEmem_pcs.children[2].textContent);
+        }
     }
+    console.log(`
+        ГКЛ: ${allListCount}\n
+        НП: ${allNPCount}\n
+        ПП: ${allPPCount}\n
+        Подвес: ${allPodvesCount}\n
+        Краб: ${allKrabCount}\n
+        Соединитель: ${allSoedCount}\n
+        Шуруп: \n${allShurup_pcsCount} шт\n${allShurup_kgCount.toFixed(1)} кг\n${allShurup_packCount} пачка
+        Эмэм: \n${allEmem_pcsCount} шт\n${allEmem_kgCount.toFixed(1)} кг\n${allEmem_packCount} пачка
+    `);
+
+    const resultCol = document.querySelector('.result-col');
+
+    resultCol.innerHTML = `
+      <div>ГКЛ - ${allListCount}шт \n</div>
+      <div>НП - ${allNPCount}шт\n</div>
+      <div>ПП - ${allPPCount}шт\n</div>
+      <div>Подвес - ${allPodvesCount}шт\n</div>
+      <div>Краб - ${allKrabCount}шт\n</div>
+      <div>Соединитель - ${allSoedCount}шт\n</div>
+      <div>Мунго - \n${allmungoCount} шт\n</div>
+      <div>Шуруп 25мм:<br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${allShurup_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
+      <div>Эмэм: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${allEmem_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
+      `;
+}
+
+function addRoom() {
+  const roomsContainer = document.querySelector('.rooms');
+  const roomCount = roomsContainer.querySelectorAll('.room').length;
+
+  const newRoom = document.createElement('div');
+  newRoom.classList.add('room');
+  newRoom.classList.add('room' + (roomCount + 1));
+  const roomId = 'room' + (roomCount + 1);
+  
+  newRoom.innerHTML = `
+      <h1>Комната ${roomCount + 1}</h1>
+      <div class="cols">
+          <div class="col">
+              <div class="inputs">
+                  <div>
+                      <h2>Длина</h2>
+                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input">
+                  </div>
+                  <div>
+                      <h2>Ширина</h2>
+                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input">
+                  </div>
+                  <div>
+                      <h2>Высота</h2>
+                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input">
+                  </div>
+                  <div>
+                      <h2>Каркас</h2>
+                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input">
+                  </div>
+                  <div>
+                      <h2>Кол-во балок</h2>
+                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input">
+                  </div>
+              </div>
+              <div class="response"></div>
+              <button class="apply">Рассчитать</button>
+          </div>
+      </div>
+  `;
+  roomsContainer.appendChild(newRoom);
+  
+  const calculateBtn = newRoom.querySelector('.apply');
+  calculateBtn.addEventListener('click', function() {
+    updateResponses('room' + (roomCount + 1));
+    totalResult();
   });
-});
 
-roomInputHeightCheckbox.addEventListener('change', function() {
-  if (this.checked) {
-    roomInputHeight.removeAttribute('disabled');
-  } else {
-    roomInputHeight.setAttribute('disabled', 'disabled');
-  }
-});
-
-function MyRound10(val) {
-  return Math.ceil(val / 10) * 10;
+  localStorage.setItem('roomCount', roomCount + 1);
 }
 
-function MyRound1000(val) {
-  return Math.ceil(val / 1000);
+function removeRoom() {
+    const roomsContainer = document.querySelector('.rooms');
+    const roomCount = roomsContainer.querySelectorAll('.room').length;
+
+    if (roomCount > 1) {
+        const lastRoom = roomsContainer.querySelector('.room:last-child');
+        roomsContainer.removeChild(lastRoom);
+        localStorage.setItem('roomCount', roomCount - 1);
+        localStorage.removeItem('room' + roomCount);
+    }
 }
 
-function MyRound0_5(val) {
-  return Math.ceil(val / 1000);
+function loadSavedRooms() {
+    const savedRoomCount = localStorage.getItem('roomCount');
+    if (savedRoomCount) {
+        const roomsContainer = document.querySelector('.rooms');
+        roomsContainer.innerHTML = '';
+        for (let i = 1; i <= savedRoomCount; i++) {
+            addRoom();
+        }
+    }
 }
 
-function inputOnChange (){
-  console.clear();
 
-  long = parseFloat(roomInputLong.value);
-  width = parseFloat(roomInputWidth.value);
-  // height = parseFloat(roomInputHeight.value);
-  karkas = parseFloat(roomInputKarkas.value);
-  balka = parseFloat(roomInputBalka.value);
-
-  P = ((long + width) * 2).toFixed(1);
-  S = (long * width).toFixed(1);
-  // M3 = (long * width * height).toFixed(1);
-
-  k = karkas / 100;
-
-  listLong = long / 2.5;
-  listWidth = width / 1.2;
-  list = Math.ceil(listLong * listWidth);
-
-  NP = Math.ceil(P / 3);
-
-  PP = Math.ceil((((width / k) - 1) * (long / 3)) + (S / 9));
-
-  podves = Math.ceil(((width / k) - 1) * balka);
-
-  krab = MyRound10(long * width);
-
-  soed = Math.ceil((width / k - 1) * (Math.ceil(long / 3 - 1)));
-
-  shurup_mass = 1.2
-  shurup_pcs = list * 75;
-  shurup_kg = shurup_mass * shurup_pcs / 1000;
-  shurup_pack = Math.ceil(shurup_pcs / 1000);
-  
-  emem_pcs = podves * 4;
-  emem_kg = (emem_pcs / 1000).toFixed(1);
-  emem_pack = MyRound1000(emem_pcs);
-  
-  mungo = NP*7;
-
-  // console.log(`\n\nПериметр: ${P} m`);
-  // console.log(`Площадь: ${S} кв`);
-  // console.log(`м³: ${M3}\n\n\n\n`);
-
-  // console.log(`Гипсакартон: ${list} шт`);
-  // console.log(`НП: ${NP} шт`);
-  // console.log(`ПП: ${PP} шт`);
-  // console.log(`Подвес: ${podves} шт`);
-  // console.log(`Краб: ${krab} шт`);
-  // console.log(`Соединитель: ${soed} шт`);
-  // console.log(`Шуруп 25мм:\n ${shurup_pcs} шт \n ${shurup_kg} кг \n ${shurup_pack} пачка`);
-  // console.log(`Эмэм:\n ${emem_pcs} шт \n ${emem_kg} кг \n ${emem_pack} пачка`);
-  // console.log(`Мунго: ${mungo} шт`);
-
-  document.querySelector('.room-bottom').innerHTML = `
-    <div class="room-bottom-block">Периметр: ${P} m</div>
-    <div class="room-bottom-block">Площадь: ${S} кв</div>
-
-    <div class="room-bottom-block">Гипсакартон: ${list} шт</div>
-    <div class="room-bottom-block">НП: ${NP} шт</div>
-    <div class="room-bottom-block">ПП: ${PP} шт</div>
-    <div class="room-bottom-block">Подвес: ${podves} шт</div>
-    <div class="room-bottom-block">Краб: ${krab} шт</div>
-    <div class="room-bottom-block">Соединитель: ${soed} шт</div>
-    <div class="room-bottom-block">Шуруп 25мм:<br>${shurup_pcs} шт <br> ${shurup_kg} кг <br> ${shurup_pack} пачка</div>
-    <div class="room-bottom-block">Эмэм:<br>${emem_pcs} шт <br> ${emem_kg} кг <br> ${emem_pack} пачка</div>
-    <div class="room-bottom-block">Мунго: ${mungo} шт</div>
-  `;
-  
+function loadSavedRoomCount() {
+    const savedRoomCount = localStorage.getItem('roomCount');
+    if (savedRoomCount) {
+        const roomsContainer = document.querySelector('.rooms');
+        while (roomsContainer.children.length < savedRoomCount) {
+            addRoom();
+        }
+    }
 }
 
-let roomCount = 0;
-
-function roomAdd(){
-  roomCount++;
-  rooms.innerHTML = rooms.innerHTML + `
-    <div class="room room${roomCount}"><h1 class="room-title">Комната ${roomCount}</h1></div>
-  `;
-}
-
-function roomRemove() {
-  if (rooms.children.length > 0) {
-    roomCount--;
-    let lastChild = rooms.lastElementChild;
-    
-    rooms.removeChild(lastChild);
-  }
-}
