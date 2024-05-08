@@ -22,7 +22,7 @@ window.onload = function() {
             input.addEventListener('change', () => {
                 updateResponses(roomClass);
             });
-        });А
+        });
     });
 };
 
@@ -58,27 +58,27 @@ function updateResponses(roomClass) {
   const mungo = NP * 7;
 
   response.innerHTML = `
-      <div>Периметр: ${P} m</div>
-      <div>Площадь: ${S} кв</div>
-      <div>M3: ${M3} кв</div>
-      <div>ГКЛ: ${list} шт</div>
-      <div>НП: ${NP} шт</div>
-      <div>ПП: ${PP} шт</div>
-      <div>Подвес: ${podves} шт</div>
-      <div>Краб: ${krab} шт</div>
-      <div>Соединитель: ${soed} шт</div>
-      <div>Мунго: ${mungo} шт</div>
+      <div>Периметр = ${P} m</div>
+      <div>Площадь = ${S} кв</div>
+      <div>Куб = ${M3} м3</div>
+      <div>ГКЛ - ${list} шт</div>
+      <div>НП - ${NP} шт</div>
+      <div>ПП - ${PP} шт</div>
+      <div>Подвес - ${podves} шт</div>
+      <div>Краб - ${krab} шт</div>
+      <div>Соединитель - ${soed} шт</div>
+      <div>Дюбель мунго- ${mungo} шт</div>
       <div>
-        Шуруп 25мм:
-        <div>${shurup_pcs} шт</div>
-        <div>${shurup_kg} кг</div>
-        <div>${shurup_pack} пач.</div>
+        Шуруп 25:
+        <div> - ${shurup_pcs} шт</div>
+        <div> - ${shurup_kg} кг</div>
+        <div> - ${shurup_pack} пач.</div>
       </div>
       <div>
-        Эмэм:
-        <div>${emem_pcs} шт</div>
-        <div>${emem_kg} кг</div>
-        <div>${emem_pack} пач.</div>
+        Шуруп ММ:
+        <div> - ${emem_pcs} шт</div>
+        <div> - ${emem_kg} кг</div>
+        <div> - ${emem_pack} пач.</div>
       </div>
   `;
 
@@ -130,7 +130,7 @@ function totalResult(){
         const responseEmem_pack = response.children[11];
 
         if (responseList){
-            const allList = parseInt(responseList.textContent.slice(0, -3).substr(4));
+            const allList = parseInt(responseList.textContent.slice(0, -3).substr(5));
             allListCount += allList;
         }
 
@@ -160,17 +160,17 @@ function totalResult(){
         }
 
         if (responsemungo){
-            const allmungo = parseInt(responsemungo.textContent.slice(0, -3).substr(7));
+            const allmungo = parseInt(responsemungo.textContent.slice(0, -3).substr(13));
             allmungoCount += allmungo;
         }
 
         if (responseShurup_pcs){
-            const allShurup_pcs = parseInt(responseShurup_pcs.children[0].textContent);
+            const allShurup_pcs = parseInt(responseShurup_pcs.children[0].textContent.replace(/[^0-9]/g,""));
             allShurup_pcsCount += allShurup_pcs;
         }
 
         if (responseShurup_kg){
-            const allShurup_kg = parseFloat(responseShurup_kg.children[1].textContent);
+            const allShurup_kg = parseFloat(responseShurup_kg.children[1].textContent.replace(/[^0-9]/g,""));
             allShurup_kgCount += allShurup_kg;
         }
 
@@ -179,12 +179,12 @@ function totalResult(){
         }
 
         if (responseEmem_pcs){
-            const allEmem_pcs = parseInt(responseEmem_pcs.children[0].textContent);
+            const allEmem_pcs = parseInt(responseEmem_pcs.children[0].textContent.replace(/[^0-9]/g,""));
             allEmem_pcsCount += allEmem_pcs;
         }
 
         if (responseEmem_kg){
-            const allEmem_kg = parseFloat(responseEmem_kg.children[1].textContent);
+            const allEmem_kg = parseFloat(responseEmem_kg.children[1].textContent.replace(/[^0-9]/g,""));
             allEmem_kgCount += allEmem_kg;
         }
 
@@ -199,22 +199,22 @@ function totalResult(){
         Подвес: ${allPodvesCount}\n
         Краб: ${allKrabCount}\n
         Соединитель: ${allSoedCount}\n
-        Шуруп: \n${allShurup_pcsCount} шт\n${allShurup_kgCount.toFixed(1)} кг\n${allShurup_packCount} пачка
-        Эмэм: \n${allEmem_pcsCount} шт\n${allEmem_kgCount.toFixed(1)} кг\n${allEmem_packCount} пачка
+        Шуруп 25мм: \n${allShurup_pcsCount} шт\n${allShurup_kgCount.toFixed(1)} кг\n${allShurup_packCount} пачка
+        Шуру: \n${allEmem_pcsCount} шт\n${allEmem_kgCount.toFixed(1)} кг\n${allEmem_packCount} пачка
     `);
 
     const resultCol = document.querySelector('.result-col');
 
     resultCol.innerHTML = `
-      <div>ГКЛ - ${allListCount}шт \n</div>
-      <div>НП - ${allNPCount}шт\n</div>
-      <div>ПП - ${allPPCount}шт\n</div>
-      <div>Подвес - ${allPodvesCount}шт\n</div>
-      <div>Краб - ${allKrabCount}шт\n</div>
-      <div>Соединитель - ${allSoedCount}шт\n</div>
-      <div>Мунго - \n${allmungoCount} шт\n</div>
-      <div>Шуруп 25мм:<br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${allShurup_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
-      <div>Эмэм: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${allEmem_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
+      <div>ГКЛ - ${allListCount} шт \n</div>
+      <div>НП - ${allNPCount} шт\n</div>
+      <div>ПП - ${allPPCount} шт\n</div>
+      <div>Подвес - ${allPodvesCount} шт\n</div>
+      <div>Краб - ${allKrabCount} шт\n</div>
+      <div>Соединитель - ${allSoedCount} шт\n</div>
+      <div>Дюбель мунго - \n${allmungoCount} шт\n</div>
+      <div>Шуруп 25: <br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${allShurup_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
+      <div>Шуруп ММ: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${allEmem_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
       `;
 }
 

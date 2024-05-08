@@ -8,7 +8,7 @@ body{
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #b8b8b8;
+  background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,17 +35,29 @@ button {
   width: 100%;
   min-height: 35px;
   border-radius: 5px;
-  color: #000000;
   font-weight: 600;
-  background-color: #1ca4a2d4;
+
+  color: #ffffff;
+  background-color: #0033ff;
   border: 1px solid #000;
-  transition: all 0.2s ease;
 }
 
-button:hover {
+button:active{
+  transform: scale(.95);
   background-color: #ffffff;
   border: 1px solid #000;
+  color: #000;
+  transition: all .001s ease;
 }
+
+@media(min-width: 768px){
+  button:hover {
+    background-color: #ffffff;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
 
 .result {
   margin-top: 20px;
@@ -124,13 +136,17 @@ button:hover {
 
 .room .response {
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #f8f8f8e4;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
 .room .response div {
   margin-bottom: 5px;
+}
+
+.room .response div:nth-child(3){
+  margin-bottom: 20px;
 }
 
 .room .response div:first-child {
@@ -147,4 +163,8 @@ button:hover {
 
 .response div div{
   border-bottom: none;
+}
+
+.apply{
+  font-size: 18px;
 }
