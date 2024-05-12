@@ -4,12 +4,42 @@ body{
   font-family: 'Nunito', sans-serif;
 }
 
+
+
 .container {
+  position: relative;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #222;
+  margin-top: 100px;
+}
+
+.all-count-room {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.header {
+  max-width: 780px;
+  background-color: #145a7d7c;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px #000000;
+  border-radius: 0 0 5px 5px;
+  position: fixed;
+  width: calc(100% - 20px);
+  top: 0;
+  left: 50%;
+  padding: 20px;
+  transform: translateX(-50%);
 }
 
 input::-webkit-outer-spin-button,
@@ -22,11 +52,13 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+
 .btns {
-  margin-bottom: 20px;
   text-align: center;
   display: flex;
   column-gap: 20px;
+  /* position: fixed; */
+  top: 0;
 }
 
 button {
@@ -41,14 +73,14 @@ button {
   background-color: #0033ff;
   border: 1px solid #000;
 }
-
+/* 
 button:active{
   transform: scale(.95);
   background-color: #ffffff;
   border: 1px solid #000;
   color: #000;
   transition: all .001s ease;
-}
+} */
 
 @media(min-width: 768px){
   button:hover {
@@ -90,7 +122,7 @@ button:active{
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .room h1, h2 {
@@ -98,6 +130,10 @@ button:active{
   margin-bottom: 10px;
   color: #3b3b3b;
   font-weight: 500;
+}
+
+.room h1{
+  text-align: center;
 }
 
 .room .cols {
@@ -140,7 +176,6 @@ button:active{
   border-radius: 5px;
   margin-bottom: 10px;
 }
-
 .room .response div {
   margin-bottom: 5px;
 }
@@ -165,6 +200,13 @@ button:active{
   border-bottom: none;
 }
 
+.titleroom h3 {
+  margin: 10px;
+  font-size: 15px;
+  text-align: center;
+}
+
 .apply{
   font-size: 18px;
+  margin-bottom: 20px;
 }

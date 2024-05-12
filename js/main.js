@@ -1,10 +1,11 @@
-// Функции для округления чисел
+const container = document.getElementById('container');
+
 function roundUpToNearestTen(num) {
   return Math.ceil(num / 10) * 10;
 }
 
 function roundUpToNearestThousand(num) {
-  return Math.ceil(num / 10) * 10;
+  return (num / 10) * 10;
 }
 
 function roundToNearestTen(num) {
@@ -26,6 +27,9 @@ window.onload = function() {
     });
 };
 
+a = 1;
+b = -1;
+
 function updateResponses(roomClass) {
   const room = document.querySelector('.' + roomClass);
   const inputs = room.querySelectorAll('input[type="number"]');
@@ -37,24 +41,32 @@ function updateResponses(roomClass) {
   const karkas = parseFloat(inputs[3].value);
   const balka = parseFloat(inputs[4].value);
 
+  const listLong = long / 2.5;
+  const listWidth = width / 1.2;
+
+  const ostList = (width - Math.floor(listWidth) * 1.2).toFixed(1);
+  const ostList2 = (long - Math.floor(listLong) * 2.5).toFixed(1);
+
   const P = ((long + width) * 2).toFixed(1);
   const S = (long * width).toFixed(1);
   const M3 = (long * width * height).toFixed(1);
+  
   const k = karkas / 100;
-  const listLong = long / 2.5;
-  const listWidth = width / 1.2;
   const list = Math.ceil(listLong * listWidth);
   const NP = Math.ceil(P / 3);
   const PP = Math.ceil((((width / k) - 1) * (long / 3)) + (S / 9));
   const podves = Math.ceil(((width / k) - 1) * balka);
-  const krab = roundUpToNearestThousand(long * width);
+  const krab = ostList2;
   const soed = Math.ceil((width / k - 1) * (Math.ceil(long / 3 - 1)));
+
   const shurup_pcs = list * 75;
   const shurup_kg = (shurup_pcs * 1.2 / 1000).toFixed(1);
   const shurup_pack = Math.ceil(shurup_pcs / 1000);
+
   const emem_pcs = podves * 4;
   const emem_kg = (emem_pcs * 0.001).toFixed(1);
   const emem_pack = Math.ceil(emem_pcs / 1000);
+
   const mungo = NP * 7;
 
   response.innerHTML = `
@@ -213,8 +225,8 @@ function totalResult(){
       <div>Краб - ${allKrabCount} шт\n</div>
       <div>Соединитель - ${allSoedCount} шт\n</div>
       <div>Дюбель мунго - \n${allmungoCount} шт\n</div>
-      <div>Шуруп 25: <br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${allShurup_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
-      <div>Шуруп ММ: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${allEmem_kgCount.toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
+      <div>Шуруп 25: <br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${(allShurup_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
+      <div>Шуруп ММ: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${(allEmem_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
       `;
 }
 
@@ -227,34 +239,40 @@ function addRoom() {
   newRoom.classList.add('room' + (roomCount + 1));
   const roomId = 'room' + (roomCount + 1);
   
+  document.querySelector('.all-count-room').innerHTML = `Всего комнат: ${roomCount + 1}`;
+
   newRoom.innerHTML = `
       <h1>Комната ${roomCount + 1}</h1>
       <div class="cols">
           <div class="col">
               <div class="inputs">
                   <div>
-                      <h2>Длина</h2>
-                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input">
+                      <h2>Длина (m)</h2>
+                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
-                      <h2>Ширина</h2>
-                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input">
+                      <h2>Ширина (m)</h2>
+                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
-                      <h2>Высота</h2>
-                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input">
+                      <h2>Высота (m)</h2>
+                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
-                      <h2>Каркас</h2>
-                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input">
+                      <h2>Каркас (cm)</h2>
+                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
-                      <h2>Кол-во балок</h2>
-                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input">
+                      <h2>Кол-во балок (шт)</h2>
+                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input" inputmode="numeric">
                   </div>
               </div>
-              <div class="response"></div>
-              <button class="apply">Рассчитать</button>
+                  <button class="apply">Рассчитать</button>
+
+                  <div class="response"></div>
+                  <div class="titleroom">
+                      <h3>Комната ${roomCount + 1}</h3>
+                  </div>
           </div>
       </div>
   `;
@@ -272,8 +290,10 @@ function addRoom() {
 function removeRoom() {
     const roomsContainer = document.querySelector('.rooms');
     const roomCount = roomsContainer.querySelectorAll('.room').length;
-
+ 
+    
     if (roomCount > 1) {
+      document.querySelector('.all-count-room').innerHTML = `Всего комнат: ${roomCount - 1}`;
         const lastRoom = roomsContainer.querySelector('.room:last-child');
         roomsContainer.removeChild(lastRoom);
         localStorage.setItem('roomCount', roomCount - 1);
@@ -292,7 +312,6 @@ function loadSavedRooms() {
     }
 }
 
-
 function loadSavedRoomCount() {
     const savedRoomCount = localStorage.getItem('roomCount');
     if (savedRoomCount) {
@@ -302,4 +321,3 @@ function loadSavedRoomCount() {
         }
     }
 }
-
