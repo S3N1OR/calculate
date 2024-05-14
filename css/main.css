@@ -29,8 +29,8 @@ body{
 }
 
 .header {
-  max-width: 780px;
-  background-color: #ccc;
+  max-width: 760px;
+  background-color: #eee;
   /* backdrop-filter: blur(4px); */
   box-shadow: 0 0 15px #000000;
   border-radius: 0 0 5px 5px;
@@ -92,8 +92,11 @@ button:active{
 
 
 .result {
-  margin-top: 20px;
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  margin-top: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
