@@ -29,7 +29,7 @@ body{
 }
 
 .header {
-  background-color: #eee;
+  background-color: #fff;
   /* backdrop-filter: blur(4px); */
   box-shadow:0 0 20px #0000005b;
   position: fixed;
