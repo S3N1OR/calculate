@@ -248,23 +248,23 @@ function addRoom() {
               <div class="inputs">
                   <div>
                       <h2>Длина (m)</h2>
-                      <input data-persist="garlic" type="text" value="0" name="long${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
                       <h2>Ширина (m)</h2>
-                      <input data-persist="garlic" type="text" value="0" name="width${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
                       <h2>Высота (m)</h2>
-                      <input data-persist="garlic" type="text" value="0" name="height${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
                       <h2>Каркас (cm)</h2>
-                      <input data-persist="garlic" type="text" value="40" name="karkas${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input" inputmode="numeric">
                   </div>
                   <div>
                       <h2>Кол-во балок (шт)</h2>
-                      <input data-persist="garlic" type="text" value="10" name="balka${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input" inputmode="numeric">
                   </div>
               </div>
                   <button class="apply">Рассчитать</button>
