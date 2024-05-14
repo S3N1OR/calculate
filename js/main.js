@@ -27,9 +27,6 @@ window.onload = function() {
     });
 };
 
-a = 1;
-b = -1;
-
 function updateResponses(roomClass) {
   const room = document.querySelector('.' + roomClass);
   const inputs = room.querySelectorAll('input[type="number"]');
@@ -59,6 +56,11 @@ function updateResponses(roomClass) {
   const krab = ostList2;
   const soed = Math.ceil((width / k - 1) * (Math.ceil(long / 3 - 1)));
 
+  const mungo = NP * 7;
+
+  const shurup6_ka_pcs = podves * 3;
+  const shurup6_ka_kg = (shurup6_ka_pcs * 4 / 1000).toFixed(1);
+
   const shurup_pcs = list * 75;
   const shurup_kg = (shurup_pcs * 1.2 / 1000).toFixed(1);
   const shurup_pack = Math.ceil(shurup_pcs / 1000);
@@ -67,12 +69,10 @@ function updateResponses(roomClass) {
   const emem_kg = (emem_pcs * 0.001).toFixed(1);
   const emem_pack = Math.ceil(emem_pcs / 1000);
 
-  const mungo = NP * 7;
-
   response.innerHTML = `
       <div>Периметр = ${P} m</div>
-      <div>Площадь = ${S} кв</div>
-      <div>Куб = ${M3} м3</div>
+      <div>Площадь = ${S} m<sup>2</sup></div>
+      <div>Объем = ${M3} m<sup>3</sup></div>
       <div>ГКЛ - ${list} шт</div>
       <div>НП - ${NP} шт</div>
       <div>ПП - ${PP} шт</div>
@@ -80,6 +80,11 @@ function updateResponses(roomClass) {
       <div>Краб - ${krab} шт</div>
       <div>Соединитель - ${soed} шт</div>
       <div>Дюбель мунго- ${mungo} шт</div>
+      <div>
+        Шуруп 6-ка:
+        <div> - ${shurup6_ka_pcs} шт</div>
+        <div> - ${shurup6_ka_kg} кг</div>
+      </div>
       <div>
         Шуруп 25:
         <div> - ${shurup_pcs} шт</div>
@@ -113,13 +118,14 @@ function totalResult(){
     let allSoedCount = 0;
     let allmungoCount = 0;
 
+    let allShurup6_ka_pcsCount = 0;
+    let allShurup6_ka_kgCount = 0;
+
     let allShurup_pcsCount = 0;
     let allShurup_kgCount = 0;
-    let allShurup_packCount = 0;
 
     let allEmem_pcsCount = 0;
     let allEmem_kgCount = 0;
-    let allEmem_packCount = 0;
 
 
     for (let i = 0; i < roomCount; i++) {
@@ -133,13 +139,16 @@ function totalResult(){
         const responseSoed = response.children[8];
         const responsemungo = response.children[9];
         
-        const responseShurup_pcs = response.children[10];
-        const responseShurup_kg = response.children[10];
-        const responseShurup_pack = response.children[10];
+        const responseShurup6_ka_pcs = response.children[10];
+        const responseShurup6_ka_kg = response.children[10];
+        
+        const responseShurup_pcs = response.children[11];
+        const responseShurup_kg = response.children[11];
+        const responseShurup_pack = response.children[11];
 
-        const responseEmem_pcs = response.children[11];
-        const responseEmem_kg = response.children[11];
-        const responseEmem_pack = response.children[11];
+        const responseEmem_pcs = response.children[12];
+        const responseEmem_kg = response.children[12];
+        const responseEmem_pack = response.children[12];
 
         if (responseList){
             const allList = parseInt(responseList.textContent.slice(0, -3).substr(5));
@@ -176,6 +185,16 @@ function totalResult(){
             allmungoCount += allmungo;
         }
 
+        if (responseShurup6_ka_pcs){
+            const allShurup6_ka_pcs = parseInt(responseShurup6_ka_pcs.children[0].textContent.replace(/[^0-9]/g,""));
+            allShurup6_ka_pcsCount += allShurup6_ka_pcs;
+        }
+
+        if (responseShurup6_ka_kg){
+            const allShurup6_ka_kg = parseFloat(responseShurup6_ka_kg.children[1].textContent.replace(/[^0-9]/g,""));
+            allShurup6_ka_kgCount += allShurup6_ka_kg;
+        }
+
         if (responseShurup_pcs){
             const allShurup_pcs = parseInt(responseShurup_pcs.children[0].textContent.replace(/[^0-9]/g,""));
             allShurup_pcsCount += allShurup_pcs;
@@ -204,29 +223,50 @@ function totalResult(){
             const allEmem_pack = parseInt(responseEmem_pcs.children[2].textContent);
         }
     }
-    console.log(`
-        ГКЛ: ${allListCount}\n
-        НП: ${allNPCount}\n
-        ПП: ${allPPCount}\n
-        Подвес: ${allPodvesCount}\n
-        Краб: ${allKrabCount}\n
-        Соединитель: ${allSoedCount}\n
-        Шуруп 25мм: \n${allShurup_pcsCount} шт\n${allShurup_kgCount.toFixed(1)} кг\n${allShurup_packCount} пачка
-        Шуру: \n${allEmem_pcsCount} шт\n${allEmem_kgCount.toFixed(1)} кг\n${allEmem_packCount} пачка
-    `);
 
     const resultCol = document.querySelector('.result-col');
 
     resultCol.innerHTML = `
-      <div>ГКЛ - ${allListCount} шт \n</div>
-      <div>НП - ${allNPCount} шт\n</div>
-      <div>ПП - ${allPPCount} шт\n</div>
-      <div>Подвес - ${allPodvesCount} шт\n</div>
-      <div>Краб - ${allKrabCount} шт\n</div>
-      <div>Соединитель - ${allSoedCount} шт\n</div>
-      <div>Дюбель мунго - \n${allmungoCount} шт\n</div>
-      <div>Шуруп 25: <br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${(allShurup_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
-      <div>Шуруп ММ: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${(allEmem_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
+      <div class="result-item">
+        <div class="result-index">1</div>
+        <div>ГКЛ - ${allListCount} шт \n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">2</div>
+        <div>НП - ${allNPCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">3</div>
+        <div>ПП - ${allPPCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">4</div>
+        <div>Подвес - ${allPodvesCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">5</div>
+        <div>Краб - ${allKrabCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">6</div>
+        <div>Соединитель - ${allSoedCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">7</div>
+        <div>Дюбель мунго - \n${allmungoCount} шт\n</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">8</div>
+        <div>Шуруп 6-ка - ${(allShurup6_ka_kgCount / 10).toFixed(1)} кг</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">9</div>
+        <div>Шуруп 25: <br> &nbsp;- ${allShurup_pcsCount} шт<br> &nbsp;- ${(allShurup_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allShurup_pcsCount / 1000)} пач.</div>
+      </div>
+      <div class="result-item">
+        <div class="result-index">10</div>
+        <div>Шуруп ММ: <br> &nbsp;- ${allEmem_pcsCount} шт<br> &nbsp;- ${(allEmem_kgCount / 10).toFixed(1)} кг<br> &nbsp;- ${Math.ceil(allEmem_pcsCount / 1000)} пач.</div>
+      </div>
       `;
 }
 
@@ -248,23 +288,23 @@ function addRoom() {
               <div class="inputs">
                   <div>
                       <h2>Длина (m)</h2>
-                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="long${roomCount}" class="input" inputmode="decimal">
                   </div>
                   <div>
                       <h2>Ширина (m)</h2>
-                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="width${roomCount}" class="input" inputmode="decimal">
                   </div>
                   <div>
                       <h2>Высота (m)</h2>
-                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="0" name="height${roomCount}" class="input" inputmode="decimal">
                   </div>
                   <div>
                       <h2>Каркас (cm)</h2>
-                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="40" name="karkas${roomCount}" class="input" inputmode="decimal">
                   </div>
                   <div>
                       <h2>Кол-во балок (шт)</h2>
-                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input" inputmode="numeric">
+                      <input data-persist="garlic" type="number" value="10" name="balka${roomCount}" class="input" inputmode="decimal">
                   </div>
               </div>
                   <button class="apply">Рассчитать</button>
